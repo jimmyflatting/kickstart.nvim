@@ -207,12 +207,12 @@ keymap.set('v', '<S-Left>', '<Left>', { noremap = true, silent = true })
 keymap.set('v', '<S-Right>', '<Right>', { noremap = true, silent = true })
 
 -- Option (Alt) + Up/Down to move text
-keymap.set('i', '<A-Up>', '<Esc>:m .-2<CR>==gi', { noremap = true, silent = true })
-keymap.set('i', '<A-Down>', '<Esc>:m .+1<CR>==gi', { noremap = true, silent = true })
-keymap.set('n', '<A-Up>', ':m .-2<CR>==', { noremap = true, silent = true })
-keymap.set('n', '<A-Down>', ':m .+1<CR>==', { noremap = true, silent = true })
-keymap.set('v', '<A-Up>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
-keymap.set('v', '<A-Down>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+keymap.set('i', '<C-Up>', '<Esc>:m .-2<CR>==gi', { noremap = true, silent = true })
+keymap.set('i', '<C-Down>', '<Esc>:m .+1<CR>==gi', { noremap = true, silent = true })
+keymap.set('n', '<C-Up>', ':m .-2<CR>==', { noremap = true, silent = true })
+keymap.set('n', '<C-Down>', ':m .+1<CR>==', { noremap = true, silent = true })
+keymap.set('v', '<C-Up>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+keymap.set('v', '<C-Down>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 
 keymap.set('n', '<leader>a', 'ggVG')
 keymap.set('n', '<leader>c', '"*y')
