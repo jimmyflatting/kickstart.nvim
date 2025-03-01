@@ -189,6 +189,56 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- keymaps
+local keymap = vim.keymap
+
+-- Shift + arrow keys to select text
+keymap.set('i', '<S-Up>', '<Esc>v<Up>i', { noremap = true, silent = true })
+keymap.set('i', '<S-Down>', '<Esc>v<Down>i', { noremap = true, silent = true })
+keymap.set('i', '<S-Left>', '<Esc>v<Left>i', { noremap = true, silent = true })
+keymap.set('i', '<S-Right>', '<Esc>v<Right>i', { noremap = true, silent = true })
+keymap.set('n', '<S-Up>', 'v<Up>', { noremap = true, silent = true })
+keymap.set('n', '<S-Down>', 'v<Down>', { noremap = true, silent = true })
+keymap.set('n', '<S-Left>', 'v<Left>', { noremap = true, silent = true })
+keymap.set('n', '<S-Right>', 'v<Right>', { noremap = true, silent = true })
+keymap.set('v', '<S-Up>', '<Up>', { noremap = true, silent = true })
+keymap.set('v', '<S-Down>', '<Down>', { noremap = true, silent = true })
+keymap.set('v', '<S-Left>', '<Left>', { noremap = true, silent = true })
+keymap.set('v', '<S-Right>', '<Right>', { noremap = true, silent = true })
+
+-- Option (Alt) + Up/Down to move text
+keymap.set('i', '<A-Up>', '<Esc>:m .-2<CR>==gi', { noremap = true, silent = true })
+keymap.set('i', '<A-Down>', '<Esc>:m .+1<CR>==gi', { noremap = true, silent = true })
+keymap.set('n', '<A-Up>', ':m .-2<CR>==', { noremap = true, silent = true })
+keymap.set('n', '<A-Down>', ':m .+1<CR>==', { noremap = true, silent = true })
+keymap.set('v', '<A-Up>', ':m \'<-2<CR>gv=gv', { noremap = true, silent = true })
+keymap.set('v', '<A-Down>', ':m \'>+1<CR>gv=gv', { noremap = true, silent = true })
+
+keymap.set("n", "<leader>a", "ggVG")
+keymap.set("n", "<leader>c", '"*y')
+keymap.set("n", "<leader>v", '"+p')
+
+-- Window splits
+keymap.set("n", "<leader>d", "<C-w>v")              -- Split vertically
+keymap.set("n", "<leader>s", ":split<CR>:term<CR>") -- Split horizontally
+keymap.set("n", "<leader>x", ":close<CR>")          -- Close current split window
+keymap.set("n", "<leader>z", "<C-w>=")              -- Make split window 50/50
+
+-- Tabs
+keymap.set("n", "<leader>t", ":tabnew<CR>")    -- Open new tab
+keymap.set("n", "<leader>tx", ":tabclose<CR>") -- Close current tab
+keymap.set("n", "<leader><Tab>", ":tabn<CR>")  -- Tab cycle
+
+-- plugin keymaps
+keymap.set("n", "<leader>m", ":MaximizerToggle<CR>") -- Maximizer
+keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>")  -- Open/Close filetree
+
+-- Navigator keymaps
+keymap.set("n", "<leader><Left>", ":TmuxNavigateLeft<CR>")
+keymap.set("n", "<leader><Right>", ":TmuxNavigateRight<CR>")
+keymap.set("n", "<leader><Up>", ":TmuxNavigateUp<CR>")
+keymap.set("n", "<leader><Down>", ":TmuxNavigateDown<CR>")
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -279,7 +329,7 @@ require('lazy').setup({
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
 
-  { -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
@@ -325,7 +375,7 @@ require('lazy').setup({
 
       -- Document existing key chains
       spec = {
-        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
+        { '<leader>c', group = '[C]ode',     mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
@@ -365,7 +415,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -473,7 +523,7 @@ require('lazy').setup({
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
@@ -889,20 +939,11 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
+    'catppuccin/nvim',
+    name = "catppuccin",
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'catppuccin-mocha'
     end,
   },
 
@@ -992,7 +1033,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
